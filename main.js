@@ -22,9 +22,11 @@ var sections = {
         +   '</div>',
 
 "about" :   '<div class="content-body" id="about">'
-        +   '   <h1>About Me</h1>'
+        +   '   <h1>About</h1>'
         +   '   <hr>'
-        +   '   <p><pre>ktravis = {\n\t"name"       : "Kyle Travis",\n\t"location"   : "Eugene, OR",\n\t"occupation" : "Student",\n\t"studying"   : ("Math", "Physics"),\n\t"email"      : "<a href="mailto:ktravis@uoregon.edu">ktravis@uoregon.edu</a>",\n\t"twitter"    : "<a href="//www.twitter.com/kmakai">@kmakai</a>",\n\t"github"     : "<a href="//github.com/ktravis">github://ktravis</a>"\n}</p>'
+        +   '   <p><pre>ktravis = {\n\t"name"       : "Kyle Travis",\n\t"location"   : "Eugene, OR",\n\t"occupation" : "Student",\n\t"studying"   : ("Math", "Physics"),\n\t"email"      : "<a href="mailto:ktravis@uoregon.edu">ktravis@uoregon.edu</a>",\n\t"twitter"    : "<a href="//www.twitter.com/kmakai">@kmakai</a>",\n\t"github"     : "<a href="//github.com/ktravis">github://ktravis</a>"\n}</pre></p>'
+        +   '   <div id="about-more"> . . . </div>'
+        +   '   <div id="about-hidden">Kyle Travis is a student of Applied Math and Physics at the University of Oregon, where he works part-time as a research assistant creating analysis software. Kyle develops small <a href="//kongregate.com/accounts/ktravis">games</a> and web applications when not arguing with compilers or scanning javadocs. <br><br>Languages and tools of choice:<ul><li>python</li><li>java</li><li>javascript</li><li>clojure</li><li>openGL</li><li>vim</li><li>archlinux</li><li>github</li></ul></div>'
         +   '</div>'};
 
 function update() { 
@@ -53,6 +55,12 @@ function loadContent(target) {
             function () { 
                 $(this).html(sections[target]);
                 $(this).fadeIn(300);
+                if (target == "about") {
+                    $("#about-more").on("click", function() {
+                            $(this).slideUp(800);
+                            $("#about-hidden").slideDown(800);
+                    });
+                }
             });
 }
 
