@@ -60,11 +60,11 @@ body {
     border-bottom: 2px dotted #ddd;
 }
 #content-main {
-    padding-top: 100px;
+    padding-top: 90px;
     padding-left: 270px;
     padding-bottom: 60px;
     min-width: 420px;
-    width: 40%;
+    width: 48%;
 }
 h1 {
     margin-bottom: 0px;
@@ -77,6 +77,21 @@ pre {
     background-color: #fff;
     margin-bottom: 10px;
 }
+.project {
+    padding: 30px;
+    background-color: #fff;
+    max-width: 460px;
+    min-width: 460px;
+    border-left: 3px #555 solid;
+}
+.project:hover { border-left: 3px #d10 solid; }
+.project span { background-color: rgba(255, 255, 255, 0.95); padding: 10px;
+    min-width: 500px; }
+#isolation { background-image: url("iso.png"); }
+#freedom { background-image: url("free.png"); }
+#tinyforum { background-image: url("tiny.png"); }
+/*#husk { background-image: url("husk.png"); }*/
+#scraps { background-image: url("scraps.png"); }
 a {
     text-decoration: none;
     color: #d10;
