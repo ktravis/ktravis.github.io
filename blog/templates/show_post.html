@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class=entries>
+  <h2>{{ post.title }}</h2>
+  <div class=time title='{{ post.timestamp }}'>{{ post.timestamp|nice_time }}.</div>
+  <p>{{ post.text|safe }}</p>
+
+  <br>
+
+  	<form action="{{ url_for('edit_entry', post_id=post.key.id()) }}" method=post class=add-entry>
+            <dl>
+                <dd><input type=text size=30 name=title value="{{ post.title }}">
+                <dd><textarea name=text rows=5 cols=40>{{ post.text|safe }}</textarea>
+                <dd><input type=submit value=Edit>
+            </dl>
+    </form>
+    <br>
+  {% if logged_in %}
+  <form id="edit-post" class="well form-horizontal"
+          action="{{ url_for('edit_entry', post_id=post.key.id()) }}" method="post" accept-charset="utf-8">
+        <fieldset>
+            {{ form.hidden_tag() }}
+            <input type="hidden" name="mode" value="edit" />
+            <div class="control-group">
+                <div class="control-label">{{ form.title.label }}</div>
+                <div class="controls">
+                    {{ form.title|safe }}
+                    {% if form.title.errors %}
+                        <ul class="errors">
+                            {% for error in form.title.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">{{ form.text.label }}</div>
+                <div class="controls">
+                    {{ form.text|safe }}
+                    {% if form.text.errors %}
+                        <ul class="errors">
+                            {% for error in form.text.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-primary" type="submit" value="Save Changes"/>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    {% endif %}
+  <a class="back-link" href="{{ url_for('show_entries') }}">back</a>
+ </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if session.logged_in %}
+        <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+            <dl>
+                <dt>Title:
+                <dd><input type=text size=30 name=title>
+                <dt>Text:
+                <dd><textarea name=text rows=5 cols=40></textarea>
+                <dd><input type=submit value=Share>
+            </dl>
+        </form>
+        <br>
+    {% endif %}
+    <div class=entries>
+    {% for entry in entries %}
+        <div class=entry>
+            <h2><a class='post-link' href="{{ url_for('show_post', post_slug=entry.slug) }}">{{ entry.title }}</a>
+            {% if session.logged_in %}
+            <form style="display:inline;" method=post action="{{ url_for('del_entry', post_id=entry.key.id()) }}"><input type="submit" value="x"></form>
+            {% endif %}
+            </h2>
+            <div class='time'>{{ entry.time|nice_time }}</div>
+            <p>{{ entry.text|safe }}</p>
+        </div>
+        <br>
+    {% else %}
+        <div><em>Unbelievable.  No entries here so far.</em>
+    {% endfor %}
+    </div>
+{% endblock %}
