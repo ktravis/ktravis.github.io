@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class=entry>
+  <h2>{{ post.title }}</h2>
+  <div class=time title='{{ post.timestamp }}'>{{ post.timestamp|nice_time }}.</div>
+  <p>{% autoescape false %}{{ post.text }}{% endautoescape %}</p>
+</div>
+<br>
+<div class=edit-form>
+  {% if logged_in %}
+  <form id="edit-post" class="well form-horizontal"
+          action="{{ url_for('edit_entry', post_id=post.key.id()) }}" method="post" accept-charset="utf-8">
+        <fieldset>
+            {{ form.csrf_token }}
+            <input type="hidden" name="mode" value="edit" />
+            <div class="control-group">
+                <div class="control-label">{{ form.title.label }}</div>
+                <div class="controls">
+                    {{ form.title|safe }}
+                    {% if form.title.errors %}
+                        <ul class="errors">
+                            {% for error in form.title.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">{{ form.text.label }}</div>
+                <div class="controls">
+                    {{ form.text|safe }}
+                    {% if form.text.errors %}
+                        <ul class="errors">
+                            {% for error in form.text.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-primary" type="submit" value="Save Changes"/>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <br>
+    {% endif %}
+  <a class="back-link" href="{{ url_for('blog') }}">back</a>
+</div>
+{% endblock %}

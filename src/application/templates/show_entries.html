@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if logged_in %}
+        <form id="add-post" class="well form-horizontal"
+          action="{{ url_for('add_entry') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <fieldset>
+            {{ form.csrf_token }}
+            <input type="hidden" name="mode" value="add" />
+            <div class="control-group">
+                <div class="control-label">{{ form.title.label }}</div>
+                <div class="controls">
+                    {{ form.title|safe }}
+                    {% if form.title.errors %}
+                        <ul class="errors">
+                            {% for error in form.title.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">{{ form.text.label }}</div>
+                <div class="controls">
+                    {{ form.text|safe }}
+                    {% if form.text.errors %}
+                        <ul class="errors">
+                            {% for error in form.text.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input class="btn btn-primary" type="submit" value="Add Post"/>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+        <br>
+    {% endif %}
+    <div class=entries>
+    {% for entry in entries %}
+        <div class=entry>
+            <h2><a class='post-link' href="{{ url_for('show_post', post_slug=entry.slug) }}">{{ entry.title }}</a>
+            {% if logged_in %}
+            <form style="display:inline;" method=post action="{{ url_for('del_entry', post_id=entry.key.id()) }}"><input type="submit" value="x"></form>
+            {% endif %}
+            </h2>
+            <div class='time'>{{ entry.timestamp|nice_time }}</div>
+            <p>{% autoescape false %}{{ entry.text }}{% endautoescape %}</p>
+        </div>
+        <br>
+    {% else %}
+        <div><em>Unbelievable.  No entries here so far.</em>
+    {% endfor %}
+    </div>
+{% endblock %}
